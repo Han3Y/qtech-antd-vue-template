@@ -1,0 +1,198 @@
+{
+  "id": "2247342",
+  "name": "工业安全审计系统",
+  "font_family": "font_family",
+  "css_prefix_text": "icon-",
+  "description": "",
+  "glyphs": [
+    {
+      "icon_id": "27807150",
+      "name": "消息提示",
+      "font_class": "xiaoxitishi",
+      "unicode": "e654",
+      "unicode_decimal": 58964
+    },
+    {
+      "icon_id": "27782513",
+      "name": "攻击提示",
+      "font_class": "gongjitishi",
+      "unicode": "e653",
+      "unicode_decimal": 58963
+    },
+    {
+      "icon_id": "27782436",
+      "name": "无消息",
+      "font_class": "wuxiaoxi",
+      "unicode": "e650",
+      "unicode_decimal": 58960
+    },
+    {
+      "icon_id": "22751129",
+      "name": "未注册",
+      "font_class": "weizhuce",
+      "unicode": "e640",
+      "unicode_decimal": 58944
+    },
+    {
+      "icon_id": "22751131",
+      "name": "已注册",
+      "font_class": "yizhuce",
+      "unicode": "e641",
+      "unicode_decimal": 58945
+    },
+    {
+      "icon_id": "22730679",
+      "name": "提示",
+      "font_class": "tishi",
+      "unicode": "e63f",
+      "unicode_decimal": 58943
+    },
+    {
+      "icon_id": "19810372",
+      "name": "取消",
+      "font_class": "quxiao",
+      "unicode": "e637",
+      "unicode_decimal": 58935
+    },
+    {
+      "icon_id": "19783861",
+      "name": "保存",
+      "font_class": "baocun",
+      "unicode": "e636",
+      "unicode_decimal": 58934
+    },
+    {
+      "icon_id": "19783856",
+      "name": "修改",
+      "font_class": "xiugai",
+      "unicode": "e635",
+      "unicode_decimal": 58933
+    },
+    {
+      "icon_id": "19783855",
+      "name": "删除",
+      "font_class": "shanchu",
+      "unicode": "e634",
+      "unicode_decimal": 58932
+    },
+    {
+      "icon_id": "18675571",
+      "name": "下载",
+      "font_class": "xiazai",
+      "unicode": "e633",
+      "unicode_decimal": 58931
+    },
+    {
+      "icon_id": "18636481",
+      "name": "安全策略",
+      "font_class": "anquancelve",
+      "unicode": "e623",
+      "unicode_decimal": 58915
+    },
+    {
+      "icon_id": "18636482",
+      "name": "报表统计",
+      "font_class": "baobiaotongji",
+      "unicode": "e624",
+      "unicode_decimal": 58916
+    },
+    {
+      "icon_id": "18636483",
+      "name": "查询",
+      "font_class": "chaxun",
+      "unicode": "e625",
+      "unicode_decimal": 58917
+    },
+    {
+      "icon_id": "18636484",
+      "name": "操作日志",
+      "font_class": "caozuorizhi",
+      "unicode": "e626",
+      "unicode_decimal": 58918
+    },
+    {
+      "icon_id": "18636485",
+      "name": "设备管理",
+      "font_class": "shebeiguanli",
+      "unicode": "e627",
+      "unicode_decimal": 58919
+    },
+    {
+      "icon_id": "18636486",
+      "name": "流量采集",
+      "font_class": "liuliangcaiji",
+      "unicode": "e628",
+      "unicode_decimal": 58920
+    },
+    {
+      "icon_id": "18636487",
+      "name": "设置 ",
+      "font_class": "shezhi",
+      "unicode": "e629",
+      "unicode_decimal": 58921
+    },
+    {
+      "icon_id": "18636488",
+      "name": "事件信息",
+      "font_class": "shijianxinxi",
+      "unicode": "e62a",
+      "unicode_decimal": 58922
+    },
+    {
+      "icon_id": "18636489",
+      "name": "收起",
+      "font_class": "shouqi",
+      "unicode": "e62b",
+      "unicode_decimal": 58923
+    },
+    {
+      "icon_id": "18636490",
+      "name": "用户",
+      "font_class": "yonghu",
+      "unicode": "e62c",
+      "unicode_decimal": 58924
+    },
+    {
+      "icon_id": "18636491",
+      "name": "系统状态",
+      "font_class": "xitongzhuangtai",
+      "unicode": "e62d",
+      "unicode_decimal": 58925
+    },
+    {
+      "icon_id": "18636492",
+      "name": "用户信息",
+      "font_class": "yonghuxinxi",
+      "unicode": "e62e",
+      "unicode_decimal": 58926
+    },
+    {
+      "icon_id": "18636493",
+      "name": "用户管理",
+      "font_class": "yonghuguanli",
+      "unicode": "e62f",
+      "unicode_decimal": 58927
+    },
+    {
+      "icon_id": "18636494",
+      "name": "展开",
+      "font_class": "zhankai",
+      "unicode": "e630",
+      "unicode_decimal": 58928
+    },
+    {
+      "icon_id": "18636495",
+      "name": "工控审计",
+      "font_class": "gongkongshenji",
+      "unicode": "e631",
+      "unicode_decimal": 58929
+    },
+    {
+      "icon_id": "18636496",
+      "name": "重置",
+      "font_class": "zhongzhi",
+      "unicode": "e632",
+      "unicode_decimal": 58930
+    }
+  ]
+}
