@@ -100,12 +100,15 @@ export default (Vue) => {
         return h(Modal, ModalProps, [h(component, ComponentProps)])
       }
     }).$mount(dialogDiv)
+    return function (){
+      dialogInstance.$destroy()
+    };
   }
 
   Object.defineProperty(Vue.prototype, '$dialog', {
     get: () => {
       return function () {
-        dialog.apply(this, arguments)
+        return dialog.apply(this, arguments)
       }
     }
   })

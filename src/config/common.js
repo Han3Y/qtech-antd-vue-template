@@ -1,6 +1,8 @@
 export const FORMAT_TYPE = {
   'YMDHMS': 'YYYY-MM-DD HH:mm:ss'
 }
+// 前端密码加盐
+export const PWD_SALT = '@12AQh#909';
 
 export const UPDATE_PWD_TYPE = {
   UPDATE_PWD: 'update_pwd',//管理员修改密码

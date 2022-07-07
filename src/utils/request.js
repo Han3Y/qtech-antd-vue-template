@@ -105,17 +105,17 @@ instance.interceptors.request.use(
 /**
  * {
  *   data: any,
- *   code: number,
+ *   result: boolean,
  *   msg: string.
  * }
  */
 instance.interceptors.response.use(
   response => {
-    let { code, data } = response.data
-    if (code != 0) {
+    let { result, data, msg } = response.data
+    if (!result) {
       notification.error({
         message: '请求失败',
-        description: data.msg,
+        description: msg,
         key: 'resultError'
       })
     }
@@ -132,8 +132,8 @@ const request = (options = {}) => {
   return new Promise((resolve, reject) => {
     instance(options)
       .then((responseData) => {
-          let { code, data, msg} = responseData
-          if (code == 0) {
+          let { result, data, msg} = responseData
+          if (result) {
             resolve(data)
           } else {
             reject(msg)
@@ -147,10 +147,7 @@ const request = (options = {}) => {
 
 //分页接口单独处理
 const pageList = (url, params = {}, options = {}) => {
-  params.pi = params.pageNo;
-  params.ps = params.pageSize;
-  delete params.pageNo;
-  delete params.pageSize;
+  params.page = params.pageNo;
   return request({
     url,
     method: 'get',
@@ -159,7 +156,7 @@ const pageList = (url, params = {}, options = {}) => {
   }).then(res => {
     let {total, items} = res;
     return {
-      pageNo: params.pi,
+      pageNo: params.page,
       data: items || [],
       totalCount: total
     }

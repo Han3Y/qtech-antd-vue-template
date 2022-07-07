@@ -1,14 +1,6 @@
 import { $http } from '@/utils/request'
 import qs from 'qs'
 
-/**
- * 校验用户名密码，返回是否需要验证指纹
- * @param data
- * @returns {Promise<unknown>}
- */
-export const checkFinger = (data) => {
-  return post('/user/login/checkFinger', data, {})
-}
 
 /**
  * 校验通过后登录
@@ -18,8 +10,13 @@ export const checkFinger = (data) => {
 
 export const login = (data) => {
 
-  let params = Object.assign({}, { action: 'login' }, data)
-  return $http.post('/person.cgi',params)
+  let config = {
+    headers: {
+      "Content-Type": "application/x-www-form-urlencoded;charset=UTF-8"
+    },
+  };
+
+  return $http.post('/user/login', qs.stringify(data), config)
 }
 
 
@@ -35,7 +32,7 @@ export function getCurrentUserNav() {
 //退出登录
 export function logout() {
   return new Promise((resolve, reject) => {
-    $http.post('/person.cgi', { action: 'loginOut' }).then((res) => {
+    $http.post('/user/logout').then((res) => {
       resolve(res)
     }).catch((err) => {
       resolve(err)

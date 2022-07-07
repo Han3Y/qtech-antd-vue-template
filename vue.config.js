@@ -151,17 +151,8 @@ const vueConfig = {
 // /api/v1
     // 配置多个代理
     proxy: {
-      '/cgi-bin': {
-        // target: 'https://192.168.1.32:443',
-        // target: 'https://192.168.34.230:443',
-        target: 'https://192.168.1.32:443',
-        // target: 'https://192.168.34.231:443',
-        // target: 'https://192.168.1.231:443',
-        // target: 'http://192.168.34.230',
-        // target: 'http://192.168.1.231:80',
-        // target: 'http://192.168.5.35:8085',
-        // target: 'http://192.168.5.247:8085',
-        //target: 'http://192.168.6.192:8085',
+      '/api/v1': {
+        target: 'http://192.168.1.231:80',
         ws: true, // 代理的WebSockets
         changeOrigin: true // 允许websockets跨域
         /*     pathRewrite: {

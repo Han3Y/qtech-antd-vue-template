@@ -39,11 +39,10 @@ const user = {
     Login({ commit }, userInfo) {
       return new Promise((resolve, reject) => {
         login(userInfo).then(response => {
-          let { userInfo } = response
+          let userInfo = response
           userInfo.expired = +new Date() + 1000 * 60 * 24//过期时间
-          userInfo.token = userInfo.loginName
-          commit('SET_TOKEN', userInfo.loginName)
-          // commit('SET_TOKEN', userInfo.id)
+          userInfo.token = userInfo.id
+          commit('SET_TOKEN', userInfo.id)
           commit('SET_INFO', userInfo)
           commit('SET_NAME', { name: userInfo.userName })
           commit('SET_ROLES', translateRole(userInfo))//转换出来的角色
@@ -59,35 +58,23 @@ const user = {
     // 获取用户信息
     // SyncInfo({ commit }, userInfo) {
     /**
-     * "userInfo":	{
-			"loginName":	"operator",
-			"userName":	"operator",
-			"authority":	"operator",
-			"userAuth":	[{
-					"auth":	"protoAudit",
-					"key":	"1"
-				}, {
-					"auth":	"systemState",
-					"key":	"1"
-				}, {
-					"auth":	"downReport",
-					"key":	"1"
-				}, {
-					"auth":	"queryLog",
-					"key":	"1"
-				}, {
-					"auth":	"gatherFlow",
-					"key":	"1"
-				}, {
-					"auth":	"getLogData",
-					"key":	"1"
-				}, {
-					"auth":	"safeStrategy",
-					"key":	"1"
-				}, {
-					"auth":	"deviceManage",
-					"key":	"1"
-				}]
+     * {
+			bh: null
+      department: null
+      email: null
+      id: "d5b7a008-aa4c-11ec-ae35-4d2ee5d58f98"
+      initPwd: false
+      job: null
+      loginName: "admin"
+      organizationCode: "ADMIN001"
+      password: null
+      phone: null
+      policeNumber: null
+      policeRank: null
+      roleId: null
+      roleName: "系统管理员"
+      roles: [1]
+      userName: "管理员"`
 		}
      * @param commit
      * @returns {Promise<unknown>}
@@ -97,7 +84,7 @@ const user = {
       // const userInfo = goodStorage.get(user)
       return new Promise((resolve, reject) => {
         const result = StorageUtil.getKey(StorageKey.USER)
-        if (result && result.authority) {
+        if (result) {
           const formatRole = translateRole(result)
           const role = formatRole
           role.permissions.map(per => {

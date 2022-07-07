@@ -43,7 +43,7 @@
     │  global.less
     │  index.css
     │  main.js
-    │  permission.js
+    │  permission.js ------------------------------------# 路由权限控制
     │  tree.txt
     │  
     ├─api  ----------------------------------------------# 全局或通用http请求

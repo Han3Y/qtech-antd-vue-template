@@ -2,7 +2,7 @@
   <div class='modal-form-box'>
     <a-spin :spinning='loading'>
       <a-form-model :model='form' :rules='rules' ref='form' :label-col='labelCol' :wrapper-col='wrapperCol'>
-        <a-form-model-item label='登录名称' v-if='UPDATE_PWD_TYPE.UPDATE_PWD===type'>
+        <a-form-model-item label='登录名称'>
           {{ userInfo.loginName }}
         </a-form-model-item>
         <a-form-model-item label='用户姓名'>
@@ -27,7 +27,7 @@ import { LABEL_COL, WRAPPER_COL } from '@/config/uiConfig'
 import md5 from 'md5'
 import { PASSWORD_PATTERN, VALIDATOR_MSG } from '@/utils/validator'
 import qs from 'qs'
-import { UPDATE_PWD_TYPE } from '@/config/common'
+import { PWD_SALT, UPDATE_PWD_TYPE } from '@/config/common'
 import { changePwdService } from '@/components/ChangePassword/changePwdService'
 
 export default {
@@ -101,10 +101,9 @@ export default {
         })
       }).then(() => {
         const data = {
-          action: 'superModifyPassword',
-          userName: this.userInfo.userName,
-          loginName: this.userInfo.loginName,
-          password: md5(this.form.newPassword)
+          userId: this.userInfo.id,
+          oldPassword: md5( PWD_SALT + md5(this.form.oldPassword)),
+          newPassword: md5( PWD_SALT + md5(this.form.newPassword))
         }
         return changePwdService.updatePwd(data)
       })
@@ -122,11 +121,8 @@ export default {
         })
       }).then(() => {
         const data = {
-          action: 'modifyPassword',
-          userName: this.userInfo.userName,
-          loginName: this.userInfo.loginName,
-          oldPassword: md5(this.form.oldPassword),
-          password: md5(this.form.newPassword)
+          userId: this.userInfo.id,
+          newPassword: md5( PWD_SALT + md5(this.form.newPassword))
         }
         return changePwdService.setPwd(data)
       })

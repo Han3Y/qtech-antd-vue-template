@@ -19,7 +19,7 @@ export default {
     getCurTime() {
       this.timer && clearInterval(this.timer);
       commonServiceApi.getTime().then(res => {
-        let { time } = res
+        let time  = res
         this.systemTime = time
         this.systemTime = +new Date(time)
         this.timer = setInterval(() => {

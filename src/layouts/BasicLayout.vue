@@ -83,7 +83,6 @@ import LogoSvg from '../assets/logo.svg?inline'
 import TitleTabs from './TitleTabs'
 import { commonServiceApi } from '@/api/common'
 import StorageUtil from '@/utils/storage'
-import { systemStatusService } from '@/views/systemStatus/systemStatusService'
 import HeadLogo from "@/components/HeadLogo/HeadLogo";
 import SystemTime from "@/components/SystemTime/SystemTime";
 
@@ -153,7 +152,6 @@ export default {
     this.$watch('isMobile', () => {
       this.$store.commit(TOGGLE_MOBILE_TYPE, this.isMobile)
     })
-    this.queryDiskInfo()
   },
   mounted() {
 
@@ -208,20 +206,6 @@ export default {
           break
       }
     },
-    queryDiskInfo() {
-      //磁盤信息
-      systemStatusService.queryDiskInfo().then(res => {
-        if (res.eventType === 'disk' && Number(res.factPer) >= Number(res.setPer)) {
-          if (!this.layer) {
-            this.layer = this.$diskMaxLimit({}, () => {
-            })
-          }
-          setTimeout(() => {
-            this.queryDiskInfo()
-          }, 1000*60)
-        }
-      })
-    }
 
   }
 }

@@ -56,20 +56,6 @@ function filterAsyncRouter(routerMap, roles) {
   return accessedRouters
 }
 
-//处理路由
-//审计员
-//operLookUp ：操作日志
-//systemInfo：事件信息
-
-//操作员
-// protoAudit  协议审计（工控审计）
-//systemState 系统状态（系统状态）
-// downReport 报表统计及下载 （报表统计）
-// queryLog 日志查看（操控按钮）
-// gatherFlow 流量采集 （流量采集）
-// getLogData 日志导出 （操控按钮）
-// safeStrategy 安全策略（安全策略）
-// deviceManage 设备管理（设备管理）
 
 function test(){}
 
@@ -88,37 +74,36 @@ const permission = {
     GenerateRoutes({ commit }, data) {//权限路由菜单
       return new Promise(resolve => {
         const result = StorageUtil.getKey(StorageKey.USER)
-        let userAuth = result.userAuth.filter(item => item.key === '1').map(item => item.auth)
+        // let userAuth = result.userAuth.filter(item => item.key === '1').map(item => item.auth)
         const { roles } = data
         // hasPermission方法遍历的是接口返回来的数据(roles--->res.result.role)
 
         const routerMap = cloneDeep(asyncRouterMap)
         const accessedRouters = filterAsyncRouter(routerMap, roles)//处理路由
         console.log(accessedRouters, '角色路由')
-        console.log(userAuth, '权限123')
 
         // 处理角色实际拥有权限
-        let roleMenuList = accessedRouters.filter((item, index) => {
-            if (index === 0) {
-              item.redirect=item.children[0].path
-              item.children= item.children.filter(subItem=>{
+        // let roleMenuList = accessedRouters.filter((item, index) => {
+        //     if (index === 0) {
+        //       item.redirect=item.children[0].path
+        //       item.children= item.children.filter(subItem=>{
+        //
+        //         if(subItem.meta.auth){
+        //           if(userAuth.includes(subItem.meta.auth[0])){
+        //             return  true
+        //           }
+        //           return  false
+        //         }
+        //         return true;
+        //       })
+        //     }
+        //     return true
+        //   }
+        // )
+        // console.log(roleMenuList,'11111')
+        // commit('SET_ROUTERS', roleMenuList)
 
-                if(subItem.meta.auth){
-                  if(userAuth.includes(subItem.meta.auth[0])){
-                    return  true
-                  }
-                  return  false
-                }
-                return true;
-              })
-            }
-            return true
-          }
-        )
-        console.log(roleMenuList,'11111')
-
-        commit('SET_ROUTERS', roleMenuList)
-        // commit('SET_ROUTERS', accessedRouters)
+        commit('SET_ROUTERS', accessedRouters)
         resolve()
       })
     }

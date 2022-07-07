@@ -77,34 +77,6 @@ const menuList = [
         meta: { title: '操作日志', icon: svgFiles.logMgt, permission: ['auditor'] },
       },
       //  操作员
-      {
-        path: '/systemStatus',
-        name: 'systemStatus',
-        component: () => import('@/views/systemStatus/systemStatus'),
-        meta: { title: '系统状态', icon: svgFiles.systemStatus, permission: ['operator'], auth: ['systemState'] }
-      },
-      {
-        path: '/systemMgt/basic',
-        name: 'basic',
-        // component: '',
-        // redirect: '/eventsMgt/safeEvents',
-        meta: { title: '设备管理', icon: svgFiles.deviceMgt, permission: ['operator'], auth: ['deviceManage'] },
-        component: RouteView,
-        children: [
-          {
-            path: '/systemMgt/basic',
-            name: 'basic',
-            component: () => import('@/views/systemMgt/basic'),
-            meta: { title: '基础设置', permission: ['operator'] }
-          },
-          {
-            path: '/systemMgt/advance',
-            name: 'advance',
-            component: () => import('@/views/systemMgt/advance'),
-            meta: { title: '高级设置', permission: ['operator'] }
-          }
-        ]
-      }
     ]
   },
   {

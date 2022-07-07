@@ -95,7 +95,9 @@
             {{ bz }}
           </a-tooltip>
         </span>
-          <span slot="action" slot-scope="text, record">
+        <span slot="action" slot-scope="text, record">
+          <a @click="view(record)">查看</a>
+          <a-divider type="vertical" />
           <a @click="edit(record)">编辑</a>
           <a-divider type="vertical" />
             <a-popconfirm placement='top' title='确认删除？' ok-text='取消' cancel-text='确定'
@@ -116,6 +118,7 @@ import { STable } from '@/components/index'
 import { DemoService } from '@/views/demo/DemoService'
 import DemoEditModal from '@/views/demo/components/DemoEditModal'
 import {MODAL_SIZE, PAGINATION} from '@/config/uiConfig'
+import DemoViewModal from '@/views/demo/components/DemoViewModal'
 const columns = [
   {
     title: '字段1',
@@ -135,7 +138,7 @@ const columns = [
   },
   {
     title: '操作',
-    width: 130,
+    width: 150,
     key: 'action',
     scopedSlots: { customRender: 'action' },
   },
@@ -227,6 +230,35 @@ export default {
           cancelText: '取消',
         }
       )
+    },
+    /**
+     * 查看
+     * @param record
+     */
+    view(record){
+      DemoService.getViewItemById(record.id).then((data) => {
+        const close = this.$dialog(
+          DemoViewModal,
+          {
+            record: data,
+            on: {
+              ok: () => {},
+              cancel() {},
+              close() {},
+            },
+          },
+          // modal props
+          {
+            title: '详情',
+            width: MODAL_SIZE.MIDDLE,
+            centered: true,
+            maskClosable: false,
+            footer: [<button type="button" class="ant-btn ant-btn-primary" onClick={() => {close && close()}}><span>确 认</span></button>]
+          }
+        )
+      }).finally(() => {
+        this.loading = false;
+      })
     },
     /**
      *  编辑

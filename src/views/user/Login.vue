@@ -53,6 +53,7 @@ import { timeFix } from '@/utils/util'
 import { mapActions, mapMutations, mapState } from 'vuex'
 import router from '@/router'
 import store from '@/store'
+import { PWD_SALT } from '@/config/common'
 
 const INPUT_TYPE_PASSWORD = 'password'
 const INPUT_TYPE_TEXT = 'text'
@@ -87,9 +88,8 @@ export default {
         if (!err) {
           this.logging = true
           const userName = this.form.getFieldValue('name')
-          // const password = md5( '@12AQh#909' + md5(this.form.getFieldValue('password')))
-          const password = md5(this.form.getFieldValue('password'))
-          this.Login({ loginName: userName, password }).then(this.afterLogin).finally(() => this.logging = false)
+          const password = md5( PWD_SALT + md5(this.form.getFieldValue('password')))
+          this.Login({ userName, password }).then(this.afterLogin).finally(() => this.logging = false)
         }
       })
     },

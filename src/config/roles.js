@@ -22,6 +22,11 @@ roleObj.permissions.push({
   permissionName: '超级模块'
 })
 
+export const roleMap = {
+  '1': 'admin',
+  '2': 'operator',
+  '3': 'auditor'
+}
 
 export const roleNameMap = {
   admin: '管理员',
@@ -34,8 +39,7 @@ export const roleNameMap = {
  * @param userInfo
  */
 export function translateRole(userInfo) {
-  // const roleId = roleMap[userInfo.roles[0]]
-  const roleId = userInfo.authority
+  const roleId = roleMap[userInfo.roles[0]]
   const role = {
     id: roleId,
     name: userInfo.loginName,

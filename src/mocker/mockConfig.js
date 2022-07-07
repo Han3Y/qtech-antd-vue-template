@@ -1,9 +1,9 @@
-const MOCK_BASE_URL = '/cgi-bin';
+const MOCK_BASE_URL = '/api/v1';
 
 class ResultVO {
-  constructor(data, result = 0, msg = '') {
+  constructor(data, result = true, msg = '') {
     this.data = data;
-    this.code = result;
+    this.result = result;
     this.msg = msg;
   }
 }
