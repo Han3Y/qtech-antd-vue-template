@@ -53,7 +53,7 @@
 <script>
 import { INT_VALIDATOR, VALIDATOR_MSG } from '@/utils/validator'
 import {LABEL_COL, RADIO_STYLE, WRAPPER_COL} from '@/config/uiConfig'
-import { DemoService } from '@/views/demo/DemoService'
+import { DemoService } from '@/views/demo/demoService'
 
 export default {
   name: 'DemoEditModal',

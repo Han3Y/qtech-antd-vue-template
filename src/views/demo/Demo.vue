@@ -115,7 +115,7 @@
 
 <script>
 import { STable } from '@/components/index'
-import { DemoService } from '@/views/demo/DemoService'
+import { DemoService } from '@/views/demo/demoService'
 import DemoEditModal from '@/views/demo/components/DemoEditModal'
 import {MODAL_SIZE, PAGINATION} from '@/config/uiConfig'
 import DemoViewModal from '@/views/demo/components/DemoViewModal'
