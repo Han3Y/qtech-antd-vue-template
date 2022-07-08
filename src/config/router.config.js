@@ -118,7 +118,6 @@ export const constantRouterMap = [
         ]
       }
     ]
-
   },
   {
     path: '/user',
