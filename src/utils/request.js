@@ -69,6 +69,7 @@ const errorHandler = (error, reject) => {
         reject(error)
         break
     }
+    reject(error)
   } else {
     notification.error({
       message: '接口请求失败,请联系管理员！',
