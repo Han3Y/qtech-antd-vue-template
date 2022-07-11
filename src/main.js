@@ -39,6 +39,7 @@ Vue.use($diskLimit)
 import ViewUI from 'view-design';//Cron用到的ui
 import locale from 'view-design/dist/locale/en-US';
 import 'view-design/dist/styles/iview.css';
+import { STable } from '@/components/index'
 
 Vue.use(ViewUI, { locale });
 
@@ -47,6 +48,7 @@ Vue.use(ViewUI, { locale });
 Vue.component('pro-layout', ProLayout)
 Vue.component('page-container', PageHeaderWrapper)
 Vue.component('page-header-wrapper', PageHeaderWrapper)
+Vue.component( 'STable', STable );
 
 window.umi_plugin_ant_themeVar = themePluginConfig.theme
 

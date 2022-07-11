@@ -114,7 +114,6 @@
 </template>
 
 <script>
-import { STable } from '@/components/index'
 import { DemoService } from '@/views/demo/demoService'
 import DemoEditModal from '@/views/demo/components/DemoEditModal'
 import {MODAL_SIZE, PAGINATION} from '@/config/uiConfig'
@@ -146,9 +145,6 @@ const columns = [
 
 export default {
   name: 'Demo',
-  components: {
-    STable,
-  },
   data() {
     return {
       PAGINATION: PAGINATION,
