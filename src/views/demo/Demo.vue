@@ -45,6 +45,16 @@
                 />
               </a-form-item>
             </a-col>
+            <a-col :md="12" :sm="24" v-show="md == 8">
+              <a-form-item label="告警时间">
+                <a-range-picker
+                  :show-time="{ format: 'HH:mm:ss' }"
+                  format="YYYY-MM-DD HH:mm:ss"
+                  :placeholder="['开始时间', '结束时间']"
+                  @change="onChangeTime"
+                />
+              </a-form-item>
+            </a-col>
             <a-col :md="md==8 ? 8 : md" :sm="24">
               <span class="table-page-search-submitButtons custom-search-btn">
                 <a-button @click="$refs.table.refresh(true)" type="primary">
@@ -186,6 +196,10 @@ export default {
         return false;
       }
       return startValue.valueOf() >= endValue.valueOf();
+    },
+    onChangeTime(value, dateString) {
+      this.queryParam.startTime = dateString[0];
+      this.queryParam.endTime = dateString[1];
     },
     /**
      * 加载列表数据
