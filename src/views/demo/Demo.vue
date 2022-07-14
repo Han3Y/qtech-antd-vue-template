@@ -353,6 +353,7 @@ export default {
               description: '删除成功',
             })
             this.$refs.table.refresh()
+            this.$refs.table.clearSelected();
           }).finally(() => {
             this.loading = false;
           })

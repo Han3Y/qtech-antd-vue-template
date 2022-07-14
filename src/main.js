@@ -37,7 +37,7 @@ Vue.use(Confirm);
 Vue.use($diskLimit)
 
 import ViewUI from 'view-design';//Cron用到的ui
-import locale from 'view-design/dist/locale/en-US';
+import locale from 'view-design/dist/locale/zh-CN';
 import 'view-design/dist/styles/iview.css';
 import { STable } from '@/components/index'
 

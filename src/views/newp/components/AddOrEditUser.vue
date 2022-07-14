@@ -1,84 +1,148 @@
 <template>
   <div class='add-or-edit-user'>
     <a-spin :spinning='loading'>
-      <a-form-model :model='userform' :rules='rules' ref='form' :label-col='labelCol' :wrapper-col='wrapperCol'>
-        <a-form-model-item label='用户姓名' prop='name'>
-          <a-input placeholder='请输入用户名' v-model='deviceForm.name' />
+      <a-form-model :model='userForm' :rules='rules' ref='formData' :label-col='labelCol' :wrapper-col='wrapperCol'>
+        <a-form-model-item label='登录名称' prop='loginName'>
+          <a-input :disabled="isEdit" placeholder='请输入登录名称' v-model='userForm.loginName' />
         </a-form-model-item>
-        <a-form-model-item label='登录名称' prop='sn'>
-          <a-input placeholder='请输入登录名称' v-model='deviceForm.sn' />
+        <a-form-model-item label='用户姓名' prop='userName'>
+          <a-input  placeholder='请输入用户名' v-model='userForm.userName' />
         </a-form-model-item>
-        <a-form-model-item label='用户角色' prop='sn'>
-          <a-radio-group v-model='userform.authority'>
-            <a-radio :value='ROLE_TYPE[3]'> 操作员</a-radio>
-            <a-radio :value='ROLE_TYPE[2]'> 审计员</a-radio>
+        <a-form-model-item label='用户角色' prop='authority'>
+          <a-radio-group v-model='userForm.role' :disabled="isEdit">
+            <a-radio :value='ROLE_TYPE.operator'> 操作员</a-radio>
+            <a-radio :value='ROLE_TYPE.auditor'> 审计员</a-radio>
           </a-radio-group>
         </a-form-model-item>
-        <a-form-model-item label='密码设置' prop='sn'>
-          <a-input v-model='userform.password' type='password' placeholder='请输入密码' />
+        <a-form-model-item label='密码设置' prop='password' v-if="!isEdit">
+          <a-input v-model='userForm.password' type='password' placeholder='请输入密码' />
         </a-form-model-item>
-        <a-form-model-item label='确认密码' prop='sn'>
-          <a-input v-model='userform.confirmPwd' type='password' placeholder='请再次输入密码' />
+        <a-form-model-item label='确认密码' prop='confirmPwd' v-if="!isEdit">
+          <a-input v-model='userForm.confirmPwd' type='password' placeholder='请再次输入密码' />
         </a-form-model-item>
-        <a-form-model-item label='用户权限'>
-          <div>
-            <div :style="{ borderBottom: '1px solid #E9E9E9' }">
-              <a-checkbox :indeterminate='indeterminate' :checked='checkAll' @change='onChange_checkAll'>
-                全选
-              </a-checkbox>
-            </div>
-            <br />
-            <a-checkbox-group v-model='checkedList' :options='authMgt[userform.authority]' />
-          </div>
+        <a-form-model-item label='手机号' prop='phone'>
+          <a-input placeholder='请输入手机号' v-model='userForm.phone' />
+        </a-form-model-item>
+        <a-form-model-item label='电子邮箱' prop='email'>
+          <a-input placeholder='请输入电子邮箱' v-model='userForm.email' />
         </a-form-model-item>
       </a-form-model>
     </a-spin>
   </div>
 </template>
-
 <script>
-import { INT_VALIDATOR, VALIDATOR_MSG } from '@/utils/validator'
+import {INT_VALIDATOR, VALIDATOR_MSG, NAME_PATTERN, PASSWORD_PATTERN, PHONE_PATTERN} from '@/utils/validator'
 import { LABEL_COL, WRAPPER_COL } from '@/config/uiConfig'
+import { userMgtService, AUTH_LIST, DEFAULT_LIST, ALL_AUTH } from '@/views/userMgt/userMgtService'
+import {roleValueMap} from "@/config/roles";
+import md5 from "md5";
+import {PWD_SALT} from "@/config/common";
 
 export default {
   name: 'AddOrEditUser',
-  data() {
-    return {
-      labelCol: LABEL_COL,
-      userform: {
-        userName: '', //姓名
-        loginName: undefined, //用户名
-        authority: 'operator', //用户角色
-        password: '',
-        confirmPwd: '',//确认密码
-        userAuth: []//权限
-      },
-      checkedList: [],
-      indeterminate: true,
-      checkAll: false,
-      authMgt: {
-        operator: [
-          { label: '协议审计', value: 'protoAudit', checked: true },
-          { label: '查看系统状态  ', value: 'systemState', checked: true, disabled: true },
-          { label: '报表统计及下载', value: 'downReport', checked: true },
-          { label: '日志查看', value: 'queryLog', checked: true, disabled: true },
-          { label: '流量采集', value: 'gatherFlow', checked: true },
-          { label: '日志导出', value: 'getLogData', checked: true, disabled: true },
-          { label: '安全策略配置', value: 'safeStrategy', checked: true, disabled: true },
-          { label: '设备配置', value: 'deviceManage', checked: true, disabled: true }
-          // { label: '流量审计', value: 7, checked: true },
-        ],
-        auditor: [
-          { label: '系统事件', value: 'systemInfo', checked: true, disabled: true },
-          { label: '操作日志', value: 'operLookUp', checked: true, disabled: true }
-        ]
+  props: {
+    record: {
+      type: Object,
+      default: () => {
       }
     }
   },
-  methods:{
-    onChange_checkAll(e) {
-      console.log(e)
-      this.checkedList = e.target.checked ? this.plainOptions : []
+  data() {
+    return {
+      ROLE_TYPE: roleValueMap,
+      loading: false,
+      labelCol: LABEL_COL,
+      wrapperCol: WRAPPER_COL,
+      userForm: {
+        id: '',
+        userName: '', //姓名
+        loginName: '', //用户名
+        role: roleValueMap.operator, //用户角色
+        password: '',
+        confirmPwd: '',//确认密码
+        phone: '',
+        email: '',
+        bh: ('1' + Math.random()).replace('.', '')
+      },
+      authMgt: AUTH_LIST,
+      rules: {
+        userName: [
+          { required: true, message: VALIDATOR_MSG.name, trigger: 'blur', pattern: NAME_PATTERN }
+        ],
+        loginName: [
+          { required: true, message: VALIDATOR_MSG.name, trigger: 'blur', pattern: NAME_PATTERN }
+        ],
+        role: [
+          {
+            required: true, message: VALIDATOR_MSG.requiredSelect, trigger: 'change'
+          }
+        ],
+        password: [
+          { required: true, message: VALIDATOR_MSG.password_red, trigger: 'blur', pattern: PASSWORD_PATTERN }
+        ],
+        phone: [
+          {  message: VALIDATOR_MSG.phone, trigger: 'blur', pattern: PHONE_PATTERN }
+        ],
+        confirmPwd: [
+          {
+            required: true,
+            message: VALIDATOR_MSG.same_password,
+            trigger: 'blur',
+            validator: (rule, value, callback) => {
+              if (!value) {
+                callback(false)
+              }
+              if (this.userForm.confirmPwd == this.userForm.password) {
+                callback()
+              } else {
+                callback(false)
+              }
+            }
+          }
+        ],
+      }
+    }
+  },
+  computed: {
+    isEdit(){
+      return !!this.$props.record?.id;
+    }
+  },
+  methods: {
+    onOk() {
+      return this.$refs.formData.validate().then(res => {
+        if(!this.isEdit){
+          let params = Object.assign({}, this.userForm)
+          params.roles = [params.role];
+          params.password = md5( PWD_SALT + md5(this.userForm.password));
+          delete  params.role;
+          delete  params.confirmPwd;
+          return userMgtService.addUser(params).then(res => {
+            return true;
+          }).catch(err => {
+            return false
+          })
+        }else{
+          let params = Object.assign({}, this.userForm)
+          params.roles = [params.role];
+          return userMgtService.editUser(params).then(res => {
+            return true;
+          }).catch(err => {
+            return false
+          })
+        }
+      }).catch(err => {
+      })
+    },
+  },
+  created() {
+    if(this.$props.record?.id){
+      this.userForm.id = this.record.id;
+      this.userForm.userName = this.record.userName;
+      this.userForm.loginName = this.record.loginName;
+      this.userForm.phone = this.record.phone;
+      this.userForm.email = this.record.email;
+      this.userForm.role = this.record.roles[0];
     }
   }
 }

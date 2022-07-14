@@ -34,6 +34,12 @@ export const roleNameMap = {
   auditor: '审计员'
 }
 
+export const roleValueMap = {
+  admin: 1,
+  operator: 2,
+  auditor: 3
+}
+
 /**
  * 转换角色权限信息
  * @param userInfo

@@ -2,6 +2,16 @@
   <div class='modal-form-box'>
     <a-spin :spinning="loading">
       <a-form-model :model="formData" :rules="rules" ref="form" :label-col="labelCol" :wrapper-col="wrapperCol">
+        <a-form-model-item label="时间" prop="time">
+          <a-date-picker
+            :locale="locale"
+            v-model="formData.inspectTime"
+            show-time
+            inputReadOnly
+            format="YYYY-MM-DD HH:mm:ss"
+            placeholder="请选择时间"
+          />
+        </a-form-model-item>
         <a-form-model-item label="文本" prop="key1">
           <a-input placeholder="请输入" v-model="formData.key1"/>
         </a-form-model-item>
@@ -45,6 +55,11 @@
         <a-form-model-item label="开关" prop="key9">
           <a-switch checked-children="开" un-checked-children="关" v-model="formData.key9"/>
         </a-form-model-item>
+        <a-form-model-item label="上传文件">
+          <a-upload :file-list="fileList" :remove="handleRemove" :before-upload="beforeUpload">
+            <a-button> <a-icon type="upload" /> 选择文件 </a-button>
+          </a-upload>
+        </a-form-model-item>
       </a-form-model>
     </a-spin>
   </div>
@@ -54,6 +69,9 @@
 import { INT_VALIDATOR, VALIDATOR_MSG } from '@/utils/validator'
 import {LABEL_COL, RADIO_STYLE, WRAPPER_COL} from '@/config/uiConfig'
 import { DemoService } from '@/views/demo/demoService'
+import locale from 'ant-design-vue/es/date-picker/locale/zh_CN';
+import moment from 'moment';
+import { DATE_FORMAT_TYPE } from '@/utils/timeUtil'
 
 export default {
   name: 'DemoEditModal',
@@ -68,8 +86,10 @@ export default {
   data: function() {
     return {
       loading: false,
+      locale,
       formData: {
         id: '',
+        time: moment(new Date, DATE_FORMAT_TYPE.DATE_TIME_FMT),
         key1: '',
         key2: '',
         key3: '',
@@ -81,6 +101,7 @@ export default {
         key9: true,
         key10: '',
       },
+      fileList: [],
       rules: {
         key1: [
           { required: true, message: VALIDATOR_MSG.required, trigger: 'change' }
@@ -139,7 +160,17 @@ export default {
     },
     checkboxOnChange(checkedValues){
       console.log(checkedValues);
-    }
+    },
+    handleRemove(file) {
+      const index = this.fileList.indexOf(file);
+      const newFileList = this.fileList.slice();
+      newFileList.splice(index, 1);
+      this.fileList = newFileList;
+    },
+    beforeUpload(file) {
+      this.fileList = [file];
+      return false;
+    },
   },
   mounted() {
     // 如果有传入值，则显示传入的值

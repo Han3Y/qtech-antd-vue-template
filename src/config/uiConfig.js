@@ -12,6 +12,14 @@ export const MODAL_SIZE = {
   VERSION:600
 };
 
+
+export const FORM_ITEM_LAYOUT_WITHOUT_LABEL = {
+  WRAPPER_COL: {
+    xs: { span: 24, offset:0 },
+    sm: { span: 13, offset: 7 },
+  },
+};
+
 /**
  * 表单label布局
  * @type {{sm: {span: number}, xs: {span: number}}}
@@ -36,7 +44,7 @@ export const WRAPPER_COL= {
  */
 export const PAGINATION =  {
   showTotal: function(total){
-    return `记录总数${total}`
+    return `记录总数：${total}`
   },
   showSizeChanger:true
 }
