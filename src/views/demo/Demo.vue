@@ -110,7 +110,7 @@
           <a-divider type="vertical" />
           <a @click="edit(record)">编辑</a>
           <a-divider type="vertical" />
-            <a-popconfirm placement='top' title='确认删除？' ok-text='取消' cancel-text='确定'
+            <a-popconfirm placement='top' title='确认删除？' ok-text='确定' cancel-text='取消'
                           @confirm="deleteItem(record)"
             >
               <a>删除</a>
