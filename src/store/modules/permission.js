@@ -103,6 +103,12 @@ const permission = {
         // console.log(roleMenuList,'11111')
         // commit('SET_ROUTERS', roleMenuList)
 
+        // 修改index重定向
+        for(let i = 0; i < accessedRouters.length; i++){
+          if(accessedRouters[i].name === 'index'){
+            accessedRouters[i].redirect = accessedRouters[i].children[0]?.path;
+          }
+        }
         commit('SET_ROUTERS', accessedRouters)
         resolve()
       })
