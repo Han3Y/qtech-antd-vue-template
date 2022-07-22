@@ -58,3 +58,16 @@ export const RADIO_STYLE = {
   height: '30px',
   lineHeight: '30px',
 }
+
+/**
+ * 下拉框搜索逻辑
+ * @param input
+ * @param option
+ * @returns {boolean}
+ * @constructor
+ */
+export function FILTER_OPTION(input, option){
+  return (
+    option.componentOptions.children[0].text.toLowerCase().indexOf(input.toLowerCase()) >= 0
+  );
+}
